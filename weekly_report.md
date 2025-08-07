@@ -10,6 +10,8 @@
 
 - Começar a desenvolver. ✓
 
+- Coonclusão do aplicativo. ✓
+
 ### **2. Resumo da Semana**
 - **Dia 04/08:** Inicializei o projeto realizando primeiramente a instalação de todas as ferramentas necessárias para o desenvolvimento. Em seguida, organizei a estrutura de arquivos e dei início à implementação do código. 
 **Evolução: 20%**;
@@ -20,8 +22,7 @@
 - **Dia 06/08:** Implementei diversas funções dentro dos arquivos já existentes, e revisei um pouco o código em geral.
 **Evolução: 50%**;
 
-- **Dia 07/08:** Hoje, fiquei consertando alguns erros que estavam ocorrendo em relação ao logs e dei continuidade ao desenvolvimento do código.
-
+- **Dia 07/08:** Hoje, dediquei-me à correção de erros relacionados aos logs e dei continuidade ao desenvolvimento do código. Realizei a alteração da logo e do nome do aplicativo e, finalmente, concluí o projeto. O aplicativo está pronto e funcional, porém, no momento, está sendo executado localmente e ainda não foi hospedado.
 
 ### **3. Bloqueios e Desafios**
-- Não enfrentei impedimentos relevantes durante o processo, apenas alguns erros pontuais e de fácil correção.
+- Inicialmente, não enfrentei grandes impedimentos, apenas alguns erros simples e de fácil correção. Na etapa final do projeto, surgiu um problema relacionado aos logs, porém consegui solucioná-lo de maneira tranquila e eficiente.
