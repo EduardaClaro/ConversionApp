@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: colors.textSecondary,
+        color: colors.text,
         marginBottom: 8,
     },
     subTitle: {
@@ -46,5 +46,28 @@ export const styles = StyleSheet.create({
         marginBottom: 12,
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    swapButton: {
+        backgroundColor: colors.inputBackground,
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 12,
+        marginBottom: 24,
+    },
+    swapButtonText: {
+        color: '#ffffffff',
+        fontWeight: '600',
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    convertButton: {
+        backgroundColor: colors.primary,
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 12,
+        marginBottom: 24,
+    },
+    convertButtonDisabled: {
+        backgroundColor: colors.disabled,
+    },
 })

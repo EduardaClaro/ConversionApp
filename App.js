@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Button } from './src/components/Button';
-import { styles } from './App.styles'
+import { styles } from './App.styles';
 import { currencies } from './src/constants/currencies';
 import { Input } from './src/components/input';
 import { ResultCard } from './src/components/ResultCard';
@@ -10,32 +10,65 @@ import { useState } from 'react';
 import { convertCurrency } from './utils/convertCurrency';
 
 export default function App() {
+  const [amount, setAmount] = useState('');
+  const [fromCurrency, setFromCurrency] = useState('USD');
+  const [toCurrency, setToCurrency] = useState('BRL');
+  const [result, setResult] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [exchangeRate, setExchangeRate] = useState(null);
 
-  const [amount, setAmount] = useState('')
-  const [fromCurrency, setFromCurrency] = useState('USD')
-  const [toCurrency, setToCurrency] = useState('BRL')
-  const [result, setResult] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [exchangeRate, setExchangeRate] = useState(null)
+  // Função para trocar as moedas
+  const swapCurrency = () => {
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+    setResult('');
+    setExchangeRate(null);
+  };
 
-
+  // Função para buscar a taxa de câmbio e converter
   async function fetchExchangeRate() {
-    const data = await exchangeRateApi(fromCurrency)
-    const rate = data.rates[toCurrency]
-    setExchangeRate(rate)
+    console.log("Iniciando fetchExchangeRate - amount:", amount, "fromCurrency:", fromCurrency, "toCurrency:", toCurrency);
+    setLoading(true);
 
-    const convertedAmount = convertCurrency(amount, rate)
+    try {
+      if (!amount || isNaN(parseFloat(amount))) {
+        console.log("Valor inválido:", amount);
+        setResult('');
+        return;
+      }
 
-    setResult(convertedAmount)
+      console.log("Chamando API para:", fromCurrency);
+      const data = await exchangeRateApi(fromCurrency);
+
+      console.log("Resposta da API:", data);
+      const rate = data.conversion_rates[toCurrency];
+
+      if (!rate) {
+        console.log("Taxa de câmbio não encontrada para:", toCurrency);
+        setResult('Taxa não disponível');
+        return;
+      }
+
+      setExchangeRate(rate);
+
+      const convertedAmount = convertCurrency(amount, rate);
+      console.log("Resultado calculado:", convertedAmount);
+      setResult(convertedAmount);
+    } catch (err) {
+      console.log("Erro na requisição:", err);
+      setResult('Erro na conversão');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView style={styles.scrollView}>
-        <View style={styles.content}> 
+        <View style={styles.content}>
           <StatusBar style="light" />
 
           <View style={styles.header}>
@@ -49,48 +82,49 @@ export default function App() {
             <Text style={styles.label}>De:</Text>
             <View style={styles.currencyGrid}>
               {currencies.map(currency => (
-                <Button variant='primary'
+                <Button
+                  variant="primary"
                   key={currency.code}
                   currency={currency}
                   onPress={() => setFromCurrency(currency.code)}
                   isSelected={fromCurrency === currency.code}
-                >
-                </Button>
+                />
               ))}
             </View>
 
             <Input label="Valor:" value={amount} onChangeText={setAmount} />
 
-            <TouchableOpacity style={styles.swapButton}>
-              <Text style={styles.swapButtonText}>
-                ↑↓
-              </Text>
+            <TouchableOpacity style={styles.swapButton} onPress={swapCurrency}>
+              <Text style={styles.swapButtonText}>↑↓</Text>
             </TouchableOpacity>
 
             <Text style={styles.label}>Para:</Text>
             <View style={styles.currencyGrid}>
               {currencies.map(currency => (
-                <Button variant='secondary'
+                <Button
+                  variant="secondary"
                   key={currency.code}
                   currency={currency}
                   onPress={() => setToCurrency(currency.code)}
                   isSelected={toCurrency === currency.code}
-                >
-                </Button>
+                />
               ))}
             </View>
           </View>
 
-          <TouchableOpacity 
-            style={styles.convertButton}
+          <TouchableOpacity
+            style={[styles.convertButton, (!amount || loading) && styles.convertButtonDisabled]}
             onPress={fetchExchangeRate}
+            disabled={!amount || loading}
           >
-            <Text style={styles.swapButtonText}>
-              Converter
-            </Text>
+            {loading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={styles.swapButtonText}>Converter</Text>
+            )}
           </TouchableOpacity>
 
-          <ResultCard 
+          <ResultCard
             exchangeRate={exchangeRate}
             result={result}
             fromCurrency={fromCurrency}

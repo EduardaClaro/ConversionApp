@@ -16,10 +16,10 @@ export function ResultCard({
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Resultado:</Text>
-            <Text>
+            <Text style={styles.amount}>
                {toSymbol} {result}
             </Text>
-            <Text>
+            <Text style={styles.rate}>
                 Taxa de Câmbio 1: {fromCurrency} = {exchangeRate.toFixed(4)} {toCurrency}
             </Text>
         </View>

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     label: {
         color: colors.textSecondary,
         marginBottom: 8,
-        fontSize: 14,
+        fontSize: 18,
     },
     amount: {
         fontSize: 24,

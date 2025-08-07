@@ -20,6 +20,8 @@
 - **Dia 06/08:** Implementei diversas funções dentro dos arquivos já existentes, e revisei um pouco o código em geral.
 **Evolução: 50%**;
 
+- **Dia 07/08:** Hoje, fiquei consertando alguns erros que estavam ocorrendo em relação ao logs e dei continuidade ao desenvolvimento do código.
+
 
 ### **3. Bloqueios e Desafios**
 - Não enfrentei impedimentos relevantes durante o processo, apenas alguns erros pontuais e de fácil correção.
